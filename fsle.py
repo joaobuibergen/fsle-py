@@ -208,6 +208,7 @@ fDates = pd.date_range(datetime.datetime(fYear,fMonth,1,12,0,0),datetime.datetim
 
 nDates = fDates.size
   
+# fField will hold the FSLE fields
 fField = np.zeros((nLat, nLon, nDates))
 
 k = 0    # Loop Counter
@@ -323,6 +324,9 @@ while k < nDates:
     #fField = cff1 / cff2
 
     fField[:,:,k] = cff1 / cff2#xr.DataArray(np.where(np.isinf(fField),0,fField), coords=[fLat, fLon], dims=["latitude", "longitude"])
+
+
+
     
     # Do some cleanup
     
@@ -334,6 +338,10 @@ while k < nDates:
     k = k + 1
     
 ## Save FSLE data as xarray DataSet
+
+
+# After the calculation, fField contains NaNs, that we will replace with zeros
+np.nan_to_num(fField,copy=False)
 
 #fsleData = xr.DataArray(fField, coords=[fLat, fLon, fDates], dims=["latitude", "longitude", "time"])
 fsleData = xr.Dataset(
