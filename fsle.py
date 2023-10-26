@@ -256,7 +256,7 @@ while k < nDates:
     # Load trajectory data
 
     fData = xr.open_zarr(particlesFile)
-    display(fData)    
+    #display(fData)    
 #fData = xr.open_dataset(particlesFile)
     #print(fData)
     #print(fData.z[dict(traj=5,obs=slice(0,100))])
