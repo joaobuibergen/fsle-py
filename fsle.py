@@ -213,13 +213,16 @@ fField = np.zeros((nLat, nLon, nDates))
 
 k = 0    # Loop Counter
 
-fFileTag = str(fYear)+"{:02d}".format(fMonth)
+#fFileTag = str(fYear)+"{:02d}".format(fMonth)
 
-particlesFile="fParticles"+ fFileTag + ".zarr"  #".nc"
+#particlesFile="fParticles"+ fFileTag + ".zarr"  #".nc"
 
 while k < nDates:
     
     print("compute FSLE for " + fDates[k].strftime("%Y-%m-%d %H:%M:%S"))
+
+    fFileTag = fDates[k].strftime("%Y%m%d%H%M%S")#str(fYear)+"{:02d}".format(fMonth)
+       
     countTime = datetime.datetime.now()-nowDate
     countTimeDays = countTime.days
     countTimeHours = int(countTime.seconds/3600)
@@ -241,7 +244,7 @@ while k < nDates:
                    depth=np.full(nF,args.z),         # release depth
                    )   
     
-    output_file = fSet.ParticleFile(name=particlesFile, outputdt=3600*outStep) # the file name and the time step of the outputs
+    output_file = fSet.ParticleFile(name="fParticles_"+ fFileTag + ".zarr", outputdt=3600*outStep) # the file name and the time step of the outputs
         
     fSet.execute(AdvectionRK4,                 # the kernel (which defines how particles move)
              runtime=maxT,                 # the total length of the run
